@@ -35,7 +35,7 @@ QUESTION_FLAG="${GREEN}?"
 WARNING_FLAG="${YELLOW}!"
 NOTICE_FLAG="${CYAN}❯"
 
-ADJUSTMENTS_MSG="${QUESTION_FLAG} ${CYAN}Now you can make adjustments to ${WHITE}CHANGELOG.md${CYAN}. Then press enter to continue."
+ADJUSTMENTS_MSG="${QUESTION_FLAG} ${CYAN}Now you can make adjustments to the changelog file. Then press enter to continue."
 PUSHING_MSG="${NOTICE_FLAG} Pushing new version to the ${WHITE}origin${CYAN}..."
 
 if [ -f VERSION ]; then
