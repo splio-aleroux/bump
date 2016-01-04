@@ -10,16 +10,17 @@
 # such as "1.2.3" or even "1.2.3-beta+001.ab"
 
 # this script will display the current version, automatically
-# suggest a "minor" version update, and ask for input to use
+# suggest a "patch" version update, and ask for input to use
 # the suggestion, or a newly entered value.
 
 # once the new version number is determined, the script will
 # pull a list of changes from git history, prepend this to
-# a file called CHANGELOG.md (under the title of the new version
-# number), give user a chance to review and update the changelist
-# manually if needed and create a GIT tag.
+# a file called CHANGELOG-{major}.{minor}.md (under the title
+# of the new version number), give user a chance to review
+# and update the changelist manually if needed and create a
+# GIT tag.
 
-NOW="$(date +'%B %d, %Y')"
+NOW="$(date +'%Y-%m-%d')"
 RED="\033[1;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
@@ -62,9 +63,10 @@ if [ -f VERSION ]; then
     NV_PATCH=${V_BASE_LIST[2]}
     CHANGELOG_FILE="CHANGELOG-$NV_MAJOR.$NV_MINOR.md"
     echo "* $INPUT_STRING ($NOW)" > tmpfile
+    echo "  * bug #123 : " >> tmpfile
+    git log --pretty=format:"    // %h - %ai - %ae - %s" "v$BASE_STRING"...HEAD >> tmpfile
     echo "" >> tmpfile
     echo "" >> tmpfile
-    git log --pretty=format:"  - %s" "v$BASE_STRING"...HEAD >> tmpfile
     cat $CHANGELOG_FILE >> tmpfile
     mv tmpfile $CHANGELOG_FILE
     echo -e "$ADJUSTMENTS_MSG"
